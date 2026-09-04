@@ -10,13 +10,13 @@
 
     <h1 class="text-3xl font-bold mb-6 text-blue-400">Welcome to RasterLab</h1>
 
-    <div class="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 w-full max-w-lg text-center">
+    <div class="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 w-full max-w-xl text-center">
         <h2 class="text-xl font-semibold mb-4">⚙️ Raster Normalization Engine</h2>
 
         <form action="/" method="POST" enctype="multipart/form-data" class="space-y-4">
             <div class="border-2 border-dashed border-slate-600 rounded-lg p-6 flex flex-col items-center justify-center hover:border-blue-500 transition">
                 
-                <!-- Image Preview -->
+                <!-- Preview Before Upload -->
                 <img id="image-preview" class="hidden max-h-48 rounded mb-3" alt="Preview">
                 <p id="file-name" class="text-sm text-slate-400 mb-2">Drag & Drop Raster file here</p>
 
@@ -31,11 +31,26 @@
             </button>
         </form>
 
-        <!-- Normalized Output Result -->
-        {% if result_image %}
-        <div class="mt-6 p-4 bg-slate-900 rounded-lg border border-slate-700">
-            <h3 class="text-green-400 font-semibold mb-2">✅ Normalized Result:</h3>
-            <img src="{{ result_image }}" class="w-full max-h-64 object-contain rounded" alt="Normalized Result">
+        <!-- Processed Result Section -->
+        {% if normalized_image %}
+        <div class="mt-6 p-4 bg-slate-900 rounded-lg border border-slate-700 text-left space-y-3">
+            <h3 class="text-green-400 font-semibold text-center text-lg">✅ Normalization Successful</h3>
+            
+            <div class="grid grid-cols-2 gap-4 my-2">
+                <div>
+                    <p class="text-xs text-slate-400 mb-1">Original Image:</p>
+                    <img src="{{ url_for('display_image', filename=original_image) }}" class="w-full max-h-40 object-cover rounded border border-slate-700" alt="Original">
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 mb-1">Normalized Image:</p>
+                    <img src="{{ url_for('display_image', filename=normalized_image) }}" class="w-full max-h-40 object-cover rounded border border-slate-700" alt="Normalized">
+                </div>
+            </div>
+
+            <div class="text-xs text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Min Value: <strong class="text-white">{{ min_val }}</strong></span>
+                <span>Max Value: <strong class="text-white">{{ max_val }}</strong></span>
+            </div>
         </div>
         {% endif %}
     </div>
